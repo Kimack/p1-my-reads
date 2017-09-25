@@ -6,6 +6,8 @@ import './App.css'
 import SearchPage from "./pages/SearchPage.js"
 import MyReadsPage from "./pages/MyReadsPage.js"
 import { Route } from 'react-router-dom'
+import NotificationSystem  from 'react-notification-system';
+import sortBy  from 'sort-by';
 
 class BooksApp extends React.Component {
 
@@ -18,7 +20,20 @@ class BooksApp extends React.Component {
         /**
          * Available shelves
          */
-        shelves: []
+        shelves: [],
+
+        /**
+         * Data is still loading
+         */
+        isLoading: true,
+    };
+
+    notificationSystem = null;
+
+    addNotification = (title, message, level, position) => {
+        this.notificationSystem.addNotification({
+            title, message, level, position
+        });
     }
 
     /**
@@ -26,9 +41,15 @@ class BooksApp extends React.Component {
      * Load all books that belong to a shelve
      */
     componentDidMount() {
+        this.notificationSystem = this.refs.notificationSystem;
+
         BooksAPI.getAll().then((books) => {
-            this.setState({ books });
-        });
+            books.sort(sortBy("title"));
+            this.setState({ books, isLoading: false });
+        }).catch((error) => {
+            this.setState({ isLoading: false });
+            this.addNotification("Error", "Could not load shelfs", "error", "tc");
+        })
 
         StaticBooksAPI.getShelves().then((shelves) => {
             this.setState({ shelves });
@@ -43,7 +64,7 @@ class BooksApp extends React.Component {
     onBookShelfChange = (changedBook, shelf) => {
         if (changedBook.shelf === shelf) return;
         BooksAPI
-            .update(changedBook, shelf).then((aa) => {
+            .update(changedBook, shelf).then(() => {
                 this.setState((previousState, props) => {
                     const books = previousState.books.filter((book) => {
                         return book.id !== changedBook.id;
@@ -52,20 +73,41 @@ class BooksApp extends React.Component {
                         changedBook.shelf = shelf
                         books.push(changedBook);
                     }
+                    books.sort(sortBy("title"));
                     return { books: books };
                 });
+            }).catch((error) => {
+                //how to reset the loading of the specific item?
+                this.setState((previousState, props) => {
+                    const books = previousState.books.filter((book) => {
+                        return book.id !== changedBook.id;
+                    })
+                    books.push(changedBook);
+                    books.sort(sortBy("title"));
+                    return { books: books };
+                });
+
+                this.addNotification("Error", "Could not update shelf", "error", "tc");
             });
     }
 
     render() {
         return (
             <div className="app">
+                <NotificationSystem ref="notificationSystem" />
                 <Route exact path="/search" render={() => (
-                    <SearchPage books={this.state.books} shelves={this.state.shelves} onBookShelfChange={this.onBookShelfChange} />
+                    <SearchPage
+                        books={this.state.books}
+                        shelves={this.state.shelves}
+                        onBookShelfChange={this.onBookShelfChange} />
                 )} />
 
                 <Route exact path="/" render={() => (
-                    <MyReadsPage books={this.state.books} shelves={this.state.shelves} onBookShelfChange={this.onBookShelfChange} />
+                    <MyReadsPage
+                        books={this.state.books}
+                        shelves={this.state.shelves}
+                        isLoading={this.state.isLoading}
+                        onBookShelfChange={this.onBookShelfChange} />
                 )} />
             </div>
         )

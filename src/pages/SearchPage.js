@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import BookList from '../components/book/BookList.js'
 import * as BooksAPI from '../api/BooksAPI.js'
+import Spinner from 'react-spinkit';
+
 class SearchPage extends React.Component {
 
 	/**
@@ -18,7 +20,32 @@ class SearchPage extends React.Component {
 		/**
 		 * The available search results
 		 */
-		searchResults: []
+		searchResults: [],
+
+		/**
+		 * 
+		 */
+		isLoading: false
+	}
+
+	componentWillReceiveProps(nextProps) {
+		//if we are rcving new props we may should update the search results
+		if (nextProps.books && this.state.searchResults) {
+			const newSearchResults = this.mapSearchBooksWithUserBooks(this.state.searchResults, nextProps.books);
+			this.setState({ searchResults: newSearchResults });
+		}
+	}
+
+	mapSearchBooksWithUserBooks(searchBooks, userBooks) {
+		const newSearchBooks = searchBooks.map(book => {
+			const userBook = userBooks.find(userBook => (
+				userBook.id === book.id
+			));
+			book.shelf = (userBook) ? userBook.shelf : "none"
+			return book;
+		});
+
+		return newSearchBooks;
 	}
 
 	/**
@@ -38,21 +65,22 @@ class SearchPage extends React.Component {
 	 * @param query The search query
 	 */
 	searchBooks = (query) => {
-		console.log(query);
 		if (query.length === 0) {
 			//skip the search if we do not have data to search
-			this.setState({ searchResults: [] })
+			this.setState({ searchResults: [], isLoading: false });
 			return;
 		}
+		this.setState({isLoading: true});
 		BooksAPI
 			.search(query, this.MAX_SEARCH_RESULTS)
 			.then(results => {
 				if (results.error) {
 					//TODO : show an error message. How to test this?
-					this.setState({ searchResults: [] })
+					this.setState({ searchResults: [], isLoading: false })
 					return;
 				}
-				this.setState({ searchResults: results });
+				const searchResults = this.mapSearchBooksWithUserBooks(results, this.props.books)
+				this.setState({ searchResults, isLoading: false });
 			});
 	}
 
@@ -65,9 +93,17 @@ class SearchPage extends React.Component {
 						<input type="text" value={this.state.query} placeholder="Search by title or author" onChange={this.handleQueryChange} />
 					</div>
 				</div>
-				<div className="search-books-results">
-					<BookList books={this.state.searchResults} shelves={this.props.shelves} onBookShelfChange={this.props.onBookShelfChange} />
-				</div>
+				{this.state.isLoading && (
+					<div className="list-books-loading">
+						<Spinner fadeIn="none" name="ball-pulse-sync" color="#60ac5d" />
+					</div>
+				)}
+				{!this.state.isLoading && (
+					<div className="search-books-results">
+						<BookList books={this.state.searchResults} shelves={this.props.shelves} onBookShelfChange={this.props.onBookShelfChange} />
+					</div>
+				)}
+
 			</div>
 		)
 	}

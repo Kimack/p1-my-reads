@@ -26,6 +26,13 @@ body, .app {
   flex: 1;
 }
 
+.list-books-loading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .bookshelf {
   padding: 0 10px 20px;
 }
@@ -133,6 +140,22 @@ body, .app {
   color: #999;
 }
 
+.book-loading {
+  position: absolute;
+  width: 128px;
+  height: 193px;
+  background: rgba(0, 0, 0, 0.32);
+  justify-content: center
+}
+
+
+.books-loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .book-top {
   position: relative;
   height: 200px;
@@ -166,6 +189,8 @@ body, .app {
 .book-cover {
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   background: #eee;
+  width: 128;
+  height: 193
 }
 .book-cover-title {
   padding: 20px 10px 0;

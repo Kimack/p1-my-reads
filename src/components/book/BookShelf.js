@@ -1,9 +1,9 @@
 import React from 'react'
 import BookList from './BookList.js'
 
-const BookShelfListItem = ({ shelf, books, shelves, onBookShelfChange }) => (
+const BookShelf = ({ shelf, books, shelves, onBookShelfChange }) => (
     <div className="bookshelf">
-        <h2 className="bookshelf-title">{shelf.title}</h2>
+        <h2 className="bookshelf-title">{shelf.title}({books.length})</h2>
         <div className="bookshelf-books">
             <BookList
                 books={books}
@@ -13,4 +13,4 @@ const BookShelfListItem = ({ shelf, books, shelves, onBookShelfChange }) => (
     </div>
 )
 
-export default BookShelfListItem;
+export default BookShelf;

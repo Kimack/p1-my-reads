@@ -1,12 +1,12 @@
 import React from 'react'
-import BookListItem from './BookListItem.js'
+import Book from './Book.js'
 
 const BookList = ({ books, shelves, onBookShelfChange }) => (
     <ol className="books-grid">
         {
             books.map((book) => (
                 <li key={book.id}>
-                    <BookListItem
+                    <Book
                         book={book}
                         shelves={shelves}
                         onBookShelfChange={onBookShelfChange} />

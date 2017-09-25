@@ -1,25 +1,24 @@
 import React from 'react'
-import BookShelfListItem from './BookShelfListItem.js'
+import BookShelf from './BookShelf.js'
 
 const BookShelfList = ({ shelves, books, onBookShelfChange }) => (
     <div className="list-books-content">
-        <div>
-            <li>
+            <ul>
                 {shelves.map((shelf) => {
                     return (<ol key={shelf.id}>
-                        <BookShelfListItem
+                        <BookShelf
                             shelf={shelf}
-                            books={books.filter((book) => {
-                                return book.shelf === shelf.id
-                            })
+                            books={
+                                books.filter((book) => {
+                                    return book.shelf === shelf.id
+                                })
                             }
                             shelves={shelves}
                             onBookShelfChange={onBookShelfChange}
                         />
                     </ol>)
                 })}
-            </li>
-        </div>
+            </ul>
     </div>
 )
 
