@@ -59,7 +59,6 @@ class Book extends React.Component {
                         </div>
                     )}
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${this.getImageUrl()}")` }}></div>
-
                 </div>
                 <div className="book-title">{book.title}</div>
                 <div className="book-authors">{book.authors}</div>

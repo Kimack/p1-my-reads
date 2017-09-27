@@ -20,7 +20,7 @@ class SearchPage extends React.Component {
 		/**
 		 * The available search results
 		 */
-		searchResults: [],
+		searchResults: null,
 
 		/**
 		 * 
@@ -67,16 +67,16 @@ class SearchPage extends React.Component {
 	searchBooks = (query) => {
 		if (query.length === 0) {
 			//skip the search if we do not have data to search
-			this.setState({ searchResults: [], isLoading: false });
+			this.setState({ searchResults: null, isLoading: false });
 			return;
 		}
-		this.setState({isLoading: true});
+		this.setState({ isLoading: true });
 		BooksAPI
 			.search(query, this.MAX_SEARCH_RESULTS)
 			.then(results => {
 				if (results.error) {
 					//TODO : show an error message. How to test this?
-					this.setState({ searchResults: [], isLoading: false })
+					this.setState({ searchResults: null, isLoading: false })
 					return;
 				}
 				const searchResults = this.mapSearchBooksWithUserBooks(results, this.props.books)
@@ -98,12 +98,16 @@ class SearchPage extends React.Component {
 						<Spinner fadeIn="none" name="ball-pulse-sync" color="#60ac5d" />
 					</div>
 				)}
-				{!this.state.isLoading && (
-					<div className="search-books-results">
-						<BookList books={this.state.searchResults} shelves={this.props.shelves} onBookShelfChange={this.props.onBookShelfChange} />
+				{!this.state.isLoading && this.state.searchResults && (
+					<div>
+						<div className="search-books-results-size">
+							{`Found ${this.state.searchResults.length} books matching your search criteria.`}
+						</div>
+						<div className="search-books-results">
+							<BookList books={this.state.searchResults} shelves={this.props.shelves} onBookShelfChange={this.props.onBookShelfChange} />
+						</div>
 					</div>
 				)}
-
 			</div>
 		)
 	}
