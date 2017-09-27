@@ -34,6 +34,11 @@ class SearchPage extends React.Component {
 			const newSearchResults = this.mapSearchBooksWithUserBooks(this.state.searchResults, nextProps.books);
 			this.setState({ searchResults: newSearchResults });
 		}
+
+		if (nextProps.query && nextProps.query !== this.state.query) {
+			this.setState({ query: nextProps.query });
+			this.searchBooks(nextProps.query);
+		}
 	}
 
 	mapSearchBooksWithUserBooks(searchBooks, userBooks) {
@@ -47,6 +52,8 @@ class SearchPage extends React.Component {
 
 		return newSearchBooks;
 	}
+
+
 
 	/**
 	 * Handle user input for updating search query
@@ -70,6 +77,13 @@ class SearchPage extends React.Component {
 			this.setState({ searchResults: null, isLoading: false });
 			return;
 		}
+
+		//update the browser url
+		this.props.history.push({
+			pathname: '/search',
+			search: query
+		});
+
 		this.setState({ isLoading: true });
 		BooksAPI
 			.search(query, this.MAX_SEARCH_RESULTS)
@@ -90,7 +104,7 @@ class SearchPage extends React.Component {
 				<div className="search-books-bar">
 					<Link className="close-search" to="/">Close</Link>
 					<div className="search-books-input-wrapper">
-						<input type="text" value={this.state.query} placeholder="Search by title or author" onChange={this.handleQueryChange} />
+						<input type="text" value={this.state.query} placeholder="Search by title or author" onChange={this.handleQueryChange}/>
 					</div>
 				</div>
 				{this.state.isLoading && (

@@ -95,10 +95,12 @@ class BooksApp extends React.Component {
         return (
             <div className="app">
                 <NotificationSystem ref="notificationSystem" />
-                <Route exact path="/search" render={() => (
+                <Route path="/search/:query?" render={(props) => (
                     <SearchPage
                         books={this.state.books}
                         shelves={this.state.shelves}
+                        query={props.match.params.query}
+                        history={props.history}
                         onBookShelfChange={this.onBookShelfChange} />
                 )} />
 
