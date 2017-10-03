@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import BookList from '../components/book/BookList.js'
 import * as BooksAPI from '../api/BooksAPI.js'
 import Spinner from 'react-spinkit';
+import PropTypes from 'prop-types';
 
 class SearchPage extends React.Component {
 
@@ -28,6 +29,10 @@ class SearchPage extends React.Component {
 		isLoading: false
 	}
 
+	/**
+	 * Update the state based on the rcv props
+	 * @param {*} nextProps 
+	 */
 	componentWillReceiveProps(nextProps) {
 		//if we are rcving new props we may should update the search results
 		if (nextProps.books && this.state.searchResults) {
@@ -41,6 +46,11 @@ class SearchPage extends React.Component {
 		}
 	}
 
+	/**
+	 * Map the current user books on the shelf with the returned books from search
+	 * @param {*} searchBooks 
+	 * @param {*} userBooks 
+	 */
 	mapSearchBooksWithUserBooks(searchBooks, userBooks) {
 		const newSearchBooks = searchBooks.map(book => {
 			const userBook = userBooks.find(userBook => (
@@ -52,8 +62,6 @@ class SearchPage extends React.Component {
 
 		return newSearchBooks;
 	}
-
-
 
 	/**
 	 * Handle user input for updating search query
@@ -104,7 +112,7 @@ class SearchPage extends React.Component {
 				<div className="search-books-bar">
 					<Link className="close-search" to="/">Close</Link>
 					<div className="search-books-input-wrapper">
-						<input type="text" value={this.state.query} placeholder="Search by title or author" onChange={this.handleQueryChange}/>
+						<input type="text" value={this.state.query} placeholder="Search by title or author" onChange={this.handleQueryChange} />
 					</div>
 				</div>
 				{this.state.isLoading && (
@@ -125,6 +133,29 @@ class SearchPage extends React.Component {
 			</div>
 		)
 	}
+}
+
+SearchPage.propTypes = {
+	/**
+	 * Array of current books on any shelf
+	 */
+	books: PropTypes.array.isRequired,
+	/**
+	 * Current filtering query
+	 */
+	query: PropTypes.string,
+	/**
+	 * Router history
+	 */
+	history: PropTypes.object.isRequired,
+	/**
+	 * Available shelves array
+	 */
+	shelves: PropTypes.array.isRequired,
+	/**
+	 * Function that will be called when the shelf is changed
+	 */
+	onBookShelfChange: PropTypes.func.isRequired
 }
 
 export default SearchPage;

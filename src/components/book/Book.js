@@ -1,13 +1,14 @@
 import React from 'react'
 import Spinner from 'react-spinkit';
+import PropTypes from 'prop-types';
+
 class Book extends React.Component {
 
     state = {
+        /**
+         * Indicate if the item is still being processed
+         */
         isUpdating: false
-    }
-
-    componentWillUpdate(nextProps, nextState) {
-        //alert("componentWillUpdate");
     }
 
     /**
@@ -65,6 +66,21 @@ class Book extends React.Component {
             </div>
         )
     }
+}
+
+Book.propTypes = {
+	/**
+	 * Current book
+	 */
+	book: PropTypes.object.isRequired,
+	/**
+	 * Available shelves array
+	 */
+    shelves: PropTypes.array.isRequired,
+	/**
+	 * Function that will be called when the shelf is changed
+	 */
+	onBookShelfChange: PropTypes.func.isRequired
 }
 
 export default Book;

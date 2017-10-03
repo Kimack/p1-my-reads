@@ -6,8 +6,8 @@ import './App.css'
 import SearchPage from "./pages/SearchPage.js"
 import MyReadsPage from "./pages/MyReadsPage.js"
 import { Route } from 'react-router-dom'
-import NotificationSystem  from 'react-notification-system';
-import sortBy  from 'sort-by';
+import NotificationSystem from 'react-notification-system'
+import sortBy from 'sort-by'
 
 class BooksApp extends React.Component {
 
@@ -46,7 +46,7 @@ class BooksApp extends React.Component {
         BooksAPI.getAll().then((books) => {
             books.sort(sortBy("title"));
             this.setState({ books, isLoading: false });
-        }).catch((error) => {
+        }).catch(() => {
             this.setState({ isLoading: false });
             this.addNotification("Error", "Could not load shelfs", "error", "tc");
         })
@@ -65,7 +65,7 @@ class BooksApp extends React.Component {
         if (changedBook.shelf === shelf) return;
         BooksAPI
             .update(changedBook, shelf).then(() => {
-                this.setState((previousState, props) => {
+                this.setState((previousState) => {
                     const books = previousState.books.filter((book) => {
                         return book.id !== changedBook.id;
                     })
@@ -76,9 +76,9 @@ class BooksApp extends React.Component {
                     books.sort(sortBy("title"));
                     return { books: books };
                 });
-            }).catch((error) => {
+            }).catch(() => {
                 //how to reset the loading of the specific item?
-                this.setState((previousState, props) => {
+                this.setState((previousState) => {
                     const books = previousState.books.filter((book) => {
                         return book.id !== changedBook.id;
                     })
