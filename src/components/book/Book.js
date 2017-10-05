@@ -43,22 +43,23 @@ class Book extends React.Component {
             <div className="book">
 
                 <div className="book-top">
-                    {this.state.isUpdating && (
-                        <div className="book-loading">
-                            <Spinner className="books-loading-spinner" fadeIn="none" name="ball-pulse-sync" color="#60ac5d" />
-                        </div>
-                    )}
-                    {!this.state.isUpdating && (
-                        <div className="book-shelf-changer">
-                            <select onChange={this.onBookShelfChange} value={this.getBookShelf()}>
-                                <option value="none" disabled>Move to...</option>
-                                {shelves.map((shelf) => {
-                                    return (<option key={shelf.id} value={shelf.id}>{shelf.title}</option>)
-                                })}
-                                <option value="none">None</option>
-                            </select>
-                        </div>
-                    )}
+                    {this.state.isUpdating ?
+                        (
+                            <div className="book-loading">
+                                <Spinner className="books-loading-spinner" fadeIn="none" name="ball-pulse-sync" color="#60ac5d" />
+                            </div>
+                        ) :
+                        (
+                            <div className="book-shelf-changer">
+                                <select onChange={this.onBookShelfChange} value={this.getBookShelf()}>
+                                    <option value="none" disabled>Move to...</option>
+                                    {shelves.map((shelf) => {
+                                        return (<option key={shelf.id} value={shelf.id}>{shelf.title}</option>)
+                                    })}
+                                    <option value="none">None</option>
+                                </select>
+                            </div>
+                        )}
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${this.getImageUrl()}")` }}></div>
                 </div>
                 <div className="book-title">{book.title}</div>
@@ -72,7 +73,7 @@ Book.propTypes = {
 	/**
 	 * Current book
 	 */
-	book: PropTypes.object.isRequired,
+    book: PropTypes.object.isRequired,
 	/**
 	 * Available shelves array
 	 */
@@ -80,7 +81,7 @@ Book.propTypes = {
 	/**
 	 * Function that will be called when the shelf is changed
 	 */
-	onBookShelfChange: PropTypes.func.isRequired
+    onBookShelfChange: PropTypes.func.isRequired
 }
 
 export default Book;
