@@ -1,0 +1,138 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`book instance is rendered corretly renders without crashing 1`] = `
+<div
+  className="search-books"
+>
+  <div
+    className="search-books-bar"
+  >
+    <Link
+      className="close-search"
+      replace={false}
+      to="/"
+    >
+      Close
+    </Link>
+    <div
+      className="search-books-input-wrapper"
+    >
+      <input
+        onChange={[Function]}
+        placeholder="Search by title or author"
+        type="text"
+        value=""
+      />
+    </div>
+  </div>
+  <div>
+    <div
+      className="search-books-results-size"
+    >
+      Found 1 books matching your search criteria.
+    </div>
+    <div
+      className="search-books-results"
+    >
+      <BookList
+        books={
+          Array [
+            Object {
+              "authors": "Authors",
+              "imageLinks": Object {
+                "thumbnail": "imageUrl",
+              },
+              "shelf": "none",
+              "title": "Title",
+            },
+          ]
+        }
+        onBookShelfChange={[Function]}
+        shelves={
+          Array [
+            Object {
+              "id": "currentlyReading",
+              "title": "Currently Reading",
+            },
+            Object {
+              "id": "wantToRead",
+              "title": "Want to Read",
+            },
+            Object {
+              "id": "read",
+              "title": "Read",
+            },
+          ]
+        }
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`book instance is rendered corretly renders without crashing when loading 1`] = `
+<div
+  className="search-books"
+>
+  <div
+    className="search-books-bar"
+  >
+    <Link
+      className="close-search"
+      replace={false}
+      to="/"
+    >
+      Close
+    </Link>
+    <div
+      className="search-books-input-wrapper"
+    >
+      <input
+        onChange={[Function]}
+        placeholder="Search by title or author"
+        type="text"
+        value=""
+      />
+    </div>
+  </div>
+  <div
+    className="list-books-loading"
+  >
+    <Spinner
+      color="#60ac5d"
+      fadeIn="none"
+      name="ball-pulse-sync"
+      noFadeIn={false}
+      overrideSpinnerClassName=""
+    />
+  </div>
+</div>
+`;
+
+exports[`book instance is rendered corretly renders without crashing without search results 1`] = `
+<div
+  className="search-books"
+>
+  <div
+    className="search-books-bar"
+  >
+    <Link
+      className="close-search"
+      replace={false}
+      to="/"
+    >
+      Close
+    </Link>
+    <div
+      className="search-books-input-wrapper"
+    >
+      <input
+        onChange={[Function]}
+        placeholder="Search by title or author"
+        type="text"
+        value=""
+      />
+    </div>
+  </div>
+</div>
+`;

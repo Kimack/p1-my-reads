@@ -92,9 +92,8 @@ class SearchPage extends React.Component {
 			return;
 		}
 
-		
-
 		this.setState({ isLoading: true });
+
 		BooksAPI
 			.search(query, SearchPage.MAX_SEARCH_RESULTS)
 			.then(results => {

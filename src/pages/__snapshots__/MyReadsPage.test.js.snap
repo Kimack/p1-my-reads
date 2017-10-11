@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`book instance is rendered corretly renders without crashing 1`] = `
+<div
+  className="list-books"
+>
+  <div
+    className="list-books-title"
+  >
+    <h1>
+      I Love Books
+    </h1>
+  </div>
+  <BookShelfList
+    books={
+      Array [
+        Object {},
+      ]
+    }
+    onBookShelfChange={[Function]}
+    shelves={
+      Array [
+        Object {
+          "id": "currentlyReading",
+          "title": "Currently Reading",
+        },
+        Object {
+          "id": "wantToRead",
+          "title": "Want to Read",
+        },
+        Object {
+          "id": "read",
+          "title": "Read",
+        },
+      ]
+    }
+  />
+  <div
+    className="open-search"
+  >
+    <Link
+      replace={false}
+      to="/search"
+    >
+      Add a book
+    </Link>
+  </div>
+</div>
+`;
+
+exports[`book instance is rendered corretly renders without crashing when loading 1`] = `
+<div
+  className="list-books"
+>
+  <div
+    className="list-books-title"
+  >
+    <h1>
+      I Love Books
+    </h1>
+  </div>
+  <div
+    className="list-books-loading"
+  >
+    <Spinner
+      color="#60ac5d"
+      fadeIn="none"
+      name="ball-pulse-sync"
+      noFadeIn={false}
+      overrideSpinnerClassName=""
+    />
+  </div>
+  <div
+    className="open-search"
+  >
+    <Link
+      replace={false}
+      to="/search"
+    >
+      Add a book
+    </Link>
+  </div>
+</div>
+`;

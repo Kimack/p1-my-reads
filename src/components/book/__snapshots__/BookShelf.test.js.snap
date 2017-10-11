@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BookList instance is rendered corretly renders without crashing 1`] = `
+<div
+  className="bookshelf"
+>
+  <h2
+    className="bookshelf-title"
+  >
+    Shelft Title
+    (
+    2
+    )
+  </h2>
+  <div
+    className="bookshelf-books"
+  >
+    <BookList
+      books={
+        Array [
+          Object {
+            "id": 0,
+          },
+          Object {
+            "id": 1,
+          },
+        ]
+      }
+      onBookShelfChange={[Function]}
+      shelves={Array []}
+    />
+  </div>
+</div>
+`;

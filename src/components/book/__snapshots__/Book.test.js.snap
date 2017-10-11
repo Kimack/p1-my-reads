@@ -69,6 +69,105 @@ exports[`book instance is rendered corretly renders without crashing 1`] = `
 </div>
 `;
 
+exports[`user click on shelf changed state.loading is false after the component update 1`] = `
+<Book
+  book={
+    Object {
+      "authors": "Authors",
+      "imageLinks": Object {
+        "thumbnail": "imageUrl",
+      },
+      "shelf": "none",
+      "title": "Title",
+    }
+  }
+  onBookShelfChange={[Function]}
+  shelves={
+    Array [
+      Object {
+        "id": "currentlyReading",
+        "title": "Currently Reading",
+      },
+      Object {
+        "id": "wantToRead",
+        "title": "Want to Read",
+      },
+      Object {
+        "id": "read",
+        "title": "Read",
+      },
+    ]
+  }
+>
+  <div
+    className="book"
+  >
+    <div
+      className="book-top"
+    >
+      <div
+        className="book-shelf-changer"
+      >
+        <select
+          onChange={[Function]}
+          value="none"
+        >
+          <option
+            disabled={true}
+            value="none"
+          >
+            Move to...
+          </option>
+          <option
+            key="currentlyReading"
+            value="currentlyReading"
+          >
+            Currently Reading
+          </option>
+          <option
+            key="wantToRead"
+            value="wantToRead"
+          >
+            Want to Read
+          </option>
+          <option
+            key="read"
+            value="read"
+          >
+            Read
+          </option>
+          <option
+            value="none"
+          >
+            None
+          </option>
+        </select>
+      </div>
+      <div
+        className="book-cover"
+        style={
+          Object {
+            "backgroundImage": "url(\\"imageUrl\\")",
+            "height": 193,
+            "width": 128,
+          }
+        }
+      />
+    </div>
+    <div
+      className="book-title"
+    >
+      Title
+    </div>
+    <div
+      className="book-authors"
+    >
+      Authors
+    </div>
+  </div>
+</Book>
+`;
+
 exports[`user click on shelf changed state.loading is true and loading is rendered 1`] = `
 <Book
   book={

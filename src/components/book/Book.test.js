@@ -76,7 +76,22 @@ describe('user click on shelf changed', () => {
         const test = mount(component);
         test.find("select").simulate('change', { target: { value: 'currentlyReading' } });
         expect(onBookShelfChange).toHaveBeenCalledTimes(1);
-        expect(test.state()).toBeTruthy();
+        expect(test.state("isUpdating")).toBeTruthy();
+        expect(test).toMatchSnapshot();
+    });
+
+    it('state.loading is false after the component update', () => {
+        const onBookShelfChange = jest.fn();
+        const component = <Book book={book} shelves={shelves} onBookShelfChange={onBookShelfChange} />;
+        let test = mount(component);
+
+        //make the component state laoding
+        test.setState({isUpdating:true});
+        expect(test.state("isUpdating")).toBeTruthy();
+
+        //send new props and check if the isUpdating changed to false
+        test = test.setProps({book, shelves, onBookShelfChange});
+        expect(test.state("isUpdating")).toBeFalsy();
         expect(test).toMatchSnapshot();
     });
 });
