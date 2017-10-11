@@ -70,14 +70,14 @@ class BooksApp extends React.Component {
                         return book.id !== changedBook.id;
                     })
                     if (shelf !== "none") {
-                        changedBook.shelf = shelf
-                        books.push(changedBook);
+                        const newBook = { ...changedBook, shelf };
+                        books.push(newBook);
                     }
                     books.sort(sortBy("title"));
                     return { books: books };
                 });
             }).catch(() => {
-                //how to reset the loading of the specific item?
+                //how to reset the loading of the specific item? remove it and insert again in the collection?
                 this.setState((previousState) => {
                     const books = previousState.books.filter((book) => {
                         return book.id !== changedBook.id;
@@ -95,14 +95,18 @@ class BooksApp extends React.Component {
         return (
             <div className="app">
                 <NotificationSystem ref="notificationSystem" />
-                <Route path="/search/:query?" render={(props) => (
-                    <SearchPage
-                        books={this.state.books}
-                        shelves={this.state.shelves}
-                        query={props.match.params.query}
-                        history={props.history}
-                        onBookShelfChange={this.onBookShelfChange} />
-                )} />
+                <Route path="/search" render={(props) => {
+                    const params = new URLSearchParams(props.location.search);
+                    const query = params.get('query'); // bar
+                    return (
+                        <SearchPage
+                            {...props}
+                            books={this.state.books}
+                            shelves={this.state.shelves}
+                            query={query}
+                            onBookShelfChange={this.onBookShelfChange} />
+                    )
+                }} />
 
                 <Route exact path="/" render={() => (
                     <MyReadsPage

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "prop-types": "^15.6.0",
+    "query-string": "^5.0.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-notification-system": "^0.2.15",
@@ -35,6 +36,8 @@
     "flow-bin": "^0.55.0"
   },
   "jest": {
-    "snapshotSerializers": ["enzyme-to-json/serializer"]
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
   }
 }

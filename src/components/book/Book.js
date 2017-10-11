@@ -11,6 +11,11 @@ class Book extends React.Component {
         isUpdating: false
     }
 
+    componentWillReceiveProps() {
+        //reset the loading
+        this.setState({isUpdating : false});
+    }
+
     /**
      * @return the image url or empty if the image does not exist
      * TODO: Add placeholder image
@@ -59,7 +64,8 @@ class Book extends React.Component {
                                     <option value="none">None</option>
                                 </select>
                             </div>
-                        )}
+                        )
+                    }
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${this.getImageUrl()}")` }}></div>
                 </div>
                 <div className="book-title">{book.title}</div>

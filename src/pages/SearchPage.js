@@ -4,6 +4,7 @@ import BookList from '../components/book/BookList.js'
 import * as BooksAPI from '../api/BooksAPI.js'
 import Spinner from 'react-spinkit';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
 
 class SearchPage extends React.Component {
 
@@ -40,7 +41,7 @@ class SearchPage extends React.Component {
 			this.setState({ searchResults: newSearchResults });
 		}
 
-		if (nextProps.query && nextProps.query !== this.state.query) {
+		if (nextProps.query != null && nextProps.query !== this.state.query) {
 			this.setState({ query: nextProps.query });
 			this.searchBooks(nextProps.query);
 		}
@@ -56,8 +57,11 @@ class SearchPage extends React.Component {
 			const userBook = userBooks.find(userBook => (
 				userBook.id === book.id
 			));
-			book.shelf = (userBook) ? userBook.shelf : "none"
-			return book;
+			const newBook = {
+				...book,
+				shelf: (userBook) ? userBook.shelf : "none"
+			}
+			return newBook;
 		});
 
 		return newSearchBooks;
@@ -70,9 +74,11 @@ class SearchPage extends React.Component {
 	handleQueryChange = (event) => {
 		const query = event.target.value
 
-		this.setState({ query });
-
-		this.searchBooks(query);
+		//update the browser url
+		this.props.history.push({
+			pathname: this.props.location.pathname,
+			search: queryString.stringify({query})
+		});
 	}
 
 	/**
@@ -86,15 +92,11 @@ class SearchPage extends React.Component {
 			return;
 		}
 
-		//update the browser url
-		this.props.history.push({
-			pathname: '/search',
-			search: query
-		});
+		
 
 		this.setState({ isLoading: true });
 		BooksAPI
-			.search(query, this.MAX_SEARCH_RESULTS)
+			.search(query, SearchPage.MAX_SEARCH_RESULTS)
 			.then(results => {
 				if (results.error) {
 					//TODO : show an error message. How to test this?
@@ -148,6 +150,10 @@ SearchPage.propTypes = {
 	 * Router history
 	 */
 	history: PropTypes.object.isRequired,
+	/**
+	 * Router Location
+	 */
+	location: PropTypes.object.isRequired,
 	/**
 	 * Available shelves array
 	 */
