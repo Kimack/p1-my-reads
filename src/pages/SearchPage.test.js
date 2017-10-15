@@ -26,7 +26,7 @@ const shelves = [
     }
 ]
 
-configure({ adapter: new Adapter() })
+configure({ adapter: new Adapter() });
 
 
 
