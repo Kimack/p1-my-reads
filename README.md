@@ -1,3 +1,22 @@
+This project is the first deliverable for the [Udacity Nano Degree React Course](https://br.udacity.com/course/react-nanodegree--nd019)
+
+
+## Project
+
+This project consist of a bookshelf where you can search books and move them from one shelf to another. The webapi is hosted by Udacity
+
+### Aditional Features
+1. Router (/search/?query=)
+2. Notification System (mainly used for errors)
+3. Jest Unit Tests
+4. Proptypes
+5. Loading (entire screen / when the books is being updated)
+6. Count numbers of book in each shelf
+
+
+## Create React App
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
