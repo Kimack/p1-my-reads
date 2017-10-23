@@ -18,18 +18,24 @@ class BooksApp extends React.Component {
         books: [],
 
         /**
-         * Available shelves
-         */
-        shelves: [],
-
-        /**
          * Data is still loading
          */
         isLoading: true,
     };
 
+    /**
+     * Array of available shelves
+     */
+    shelves = null;
+
+    /**
+     * 
+     */
     notificationSystem = null;
 
+    /**
+     * Dispath a notification
+     */
     addNotification = (title, message, level, position) => {
         this.notificationSystem.addNotification({
             title, message, level, position
@@ -52,7 +58,7 @@ class BooksApp extends React.Component {
         })
 
         StaticBooksAPI.getShelves().then((shelves) => {
-            this.setState({ shelves });
+            this.shelves = shelves;
         });
     }
 
@@ -65,17 +71,17 @@ class BooksApp extends React.Component {
         if (changedBook.shelf === shelf) return;
         BooksAPI
             .update(changedBook, shelf).then(() => {
-                this.setState((previousState) => {
-                    const books = previousState.books.filter((book) => {
-                        return book.id !== changedBook.id;
-                    })
-                    if (shelf !== "none") {
-                        const newBook = { ...changedBook, shelf };
-                        books.push(newBook);
-                    }
-                    books.sort(sortBy("title"));
-                    return { books: books };
-                });
+                this.setState((previousState) => ({
+                    //filter out the changed book, then create a new book if the book is 
+                    //assigned to a new shelf updating the shelf, sort the elements 
+                    //and push the book to the state
+
+                    books: previousState.books
+                        .filter(book => book.id !== changedBook.id)
+                        .concat({ ...changedBook, shelf })
+                        .filter(book => book.shelf !== "none")
+                        .sort(sortBy("title"))
+                }));
             }).catch(() => {
                 //how to reset the loading of the specific item? remove it and insert again in the collection?
                 this.setState((previousState) => {
@@ -102,7 +108,7 @@ class BooksApp extends React.Component {
                         <SearchPage
                             {...props}
                             books={this.state.books}
-                            shelves={this.state.shelves}
+                            shelves={this.shelves}
                             query={query}
                             onBookShelfChange={this.onBookShelfChange} />
                     )
@@ -111,7 +117,7 @@ class BooksApp extends React.Component {
                 <Route exact path="/" render={() => (
                     <MyReadsPage
                         books={this.state.books}
-                        shelves={this.state.shelves}
+                        shelves={this.shelves}
                         isLoading={this.state.isLoading}
                         onBookShelfChange={this.onBookShelfChange} />
                 )} />
