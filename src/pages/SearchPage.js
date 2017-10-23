@@ -5,8 +5,14 @@ import * as BooksAPI from '../api/BooksAPI.js'
 import Spinner from 'react-spinkit';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
+import { debounce } from 'throttle-debounce';
 
 class SearchPage extends React.Component {
+
+	/**
+	 * Time do debounc the search
+	 */
+	static DEBOUNCE_SEARCH = 500;
 
 	/**
 	 * Max result to return from the search api
@@ -25,9 +31,16 @@ class SearchPage extends React.Component {
 		searchResults: null,
 
 		/**
-		 * 
+		 * If the search is being perfomed
 		 */
 		isLoading: false
+	}
+
+	constructor() {
+		super();
+
+		//create a debouncer
+		this.doSearch = debounce(SearchPage.DEBOUNCE_SEARCH, false, this.doSearch);
 	}
 
 	/**
@@ -68,18 +81,31 @@ class SearchPage extends React.Component {
 	}
 
 	/**
+	 * Execute the book search
+	 */
+	doSearch() {
+		this.searchBooks(this.state.query);
+
+		//update the browser url
+		this.props.history.push({
+			pathname: this.props.location.pathname,
+			search: queryString.stringify({ query: this.state.query })
+		});
+	}
+
+	/**
 	 * Handle user input for updating search query
 	 * @param event
 	 */
 	handleQueryChange = (event) => {
 		const query = event.target.value
 
-		//update the browser url
-		this.props.history.push({
-			pathname: this.props.location.pathname,
-			search: queryString.stringify({query})
-		});
-	}
+		this.setState({ query });
+
+		this.doSearch();
+	};
+
+
 
 	/**
 	 * Call the BooksAPI to search for books that match the required input (search query)

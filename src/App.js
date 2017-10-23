@@ -26,7 +26,7 @@ class BooksApp extends React.Component {
     /**
      * Array of available shelves
      */
-    shelves = null;
+    shelves = [];
 
     /**
      * 
