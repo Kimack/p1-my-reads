@@ -37,9 +37,11 @@ class BooksApp extends React.Component {
      * Dispath a notification
      */
     addNotification = (title, message, level, position) => {
-        this.notificationSystem.addNotification({
-            title, message, level, position
-        });
+        if (this.notificationSystem) {
+            this.notificationSystem.addNotification({
+                title, message, level, position
+            });
+        }
     }
 
     /**
