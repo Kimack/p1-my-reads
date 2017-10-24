@@ -11,17 +11,21 @@ import sortBy from 'sort-by'
 
 class BooksApp extends React.Component {
 
-    state = {
-        /**
-         * Array of books that are on a available shelf
-         */
-        books: [],
+    constructor() {
+        super();
 
-        /**
-         * Data is still loading
-         */
-        isLoading: true,
-    };
+        this.state = {
+            /**
+             * Array of books that are on a available shelf
+             */
+            books: [],
+
+            /**
+             * Data is still loading
+             */
+            isLoading: true,
+        }
+    }
 
     /**
      * Array of available shelves
@@ -29,7 +33,7 @@ class BooksApp extends React.Component {
     shelves = [];
 
     /**
-     * 
+     * This is required by the notification system
      */
     notificationSystem = null;
 
@@ -48,7 +52,7 @@ class BooksApp extends React.Component {
      * Load all available shelves
      * Load all books that belong to a shelve
      */
-    componentDidMount() {
+    componentDidMount = () => {
         this.notificationSystem = this.refs.notificationSystem;
 
         BooksAPI.getAll().then((books) => {

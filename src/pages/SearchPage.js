@@ -19,25 +19,25 @@ class SearchPage extends React.Component {
 	 */
 	static MAX_SEARCH_RESULTS = 20;
 
-	state = {
-		/**
-		 * The current search query
-		 */
-		query: "",
-
-		/**
-		 * The available search results
-		 */
-		searchResults: null,
-
-		/**
-		 * If the search is being perfomed
-		 */
-		isLoading: false
-	}
-
 	constructor() {
 		super();
+
+		this.state = {
+			/**
+			 * The current search query
+			 */
+			query: "",
+
+			/**
+			 * The available search results
+			 */
+			searchResults: null,
+
+			/**
+			 * If the search is being perfomed
+			 */
+			isLoading: false
+		}
 
 		//create a debouncer
 		this.doSearch = debounce(SearchPage.DEBOUNCE_SEARCH, false, this.doSearch);
