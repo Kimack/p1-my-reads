@@ -1,3 +1,5 @@
+![build travis-ci](https://travis-ci.org/gfrancischini/p1-my-reads.svg?branch=master)
+
 This project is the first deliverable for the [Udacity Nano Degree React Course](https://br.udacity.com/course/react-nanodegree--nd019)
 
 
